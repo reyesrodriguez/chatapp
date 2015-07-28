@@ -25,16 +25,16 @@ var server = net.createServer(function(c){
 		var message = member + '> ' + data.toString();
 
 		messages(member, message)
-		
+
 
 		console.log(message);
 	})
 
 	c.on('end', function(){
 		client.splice(client.indexOf(c), 1)
-		console.log(member + " has left the group")
+		messages(member, + " has left the group")
 		if(client.length === 0)
-			console.log('Everyone left the chat.\n');
+			c.write('Everyone left the chat.\n');
 		// console.log(messages)
 	})
 });
@@ -45,13 +45,6 @@ server.listen(port, function(){
 
 function messages(from, message) {
 
-	
-	// if (client.length === 0) {
-	// 	console.log('Everyone left the chat.\n');
-	// 	return;
-	// }
-
-	//If there are clients remaining then broadcast message
 	client.forEach(function(c, index, array){
 		// Dont send any messages to the sender
 		if(c.name === from) return;
