@@ -22,7 +22,7 @@ var server = net.createServer(function(c){
 
 	c.on('data', function(data){
 		//console.log(data.toString().trim());
-		var message = member + '> ' + data.toString();
+		var message = member + ' ==> ' + data.toString();
 
 		messages(member, message)
 
