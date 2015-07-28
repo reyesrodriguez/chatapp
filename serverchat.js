@@ -28,6 +28,8 @@ var server = net.createServer(function(c){
 	})
 
 	c.on('end', function(){
+		client.splice(client,indexOf(c), 1)
+		messages(member + " has left the group.\n")
 		console.log('client disconnected')
 	})
 });
