@@ -5,11 +5,13 @@ var chalk = require('chalk')
 var client = [];
 var guest = 0;
 
+
 var server = net.createServer(function(c){
 	guest++
+
 	c.name = "user" + guest;
 	var member = c.name
-	c.write(chalk.blue(member) + " has joined the group\r\n")
+	//c.write(chalk.blue(member) + " has joined the group\r\n")
 
 	client.push(c);
 	console.log(client)
@@ -23,14 +25,17 @@ var server = net.createServer(function(c){
 		var message = member + '> ' + data.toString();
 
 		messages(member, message)
+		
 
-		process.stdout.write(message);
+		console.log(message);
 	})
 
 	c.on('end', function(){
-		client.splice(client,indexOf(c), 1)
-		messages(member + " has left the group.\n")
-		console.log('client disconnected')
+		client.splice(client.indexOf(c), 1)
+		console.log(member + " has left the group")
+		if(client.length === 0)
+			console.log('Everyone left the chat.\n');
+		// console.log(messages)
 	})
 });
 
@@ -40,11 +45,11 @@ server.listen(port, function(){
 
 function messages(from, message) {
 
-	// If there are no sockets, then don't broadcast any messages
-	if (client.length === 0) {
-		process.stdout.write('Everyone left the chat');
-		return;
-	}
+	
+	// if (client.length === 0) {
+	// 	console.log('Everyone left the chat.\n');
+	// 	return;
+	// }
 
 	//If there are clients remaining then broadcast message
 	client.forEach(function(c, index, array){
